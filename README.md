@@ -12,10 +12,12 @@ pip install -r requirements.txt
 
 2. Specify the PDF link and OPEN_API_KEY to create the embedding model
 ```
-python src/make_emb.py
+# Example
+python src/make_emb.py --pdf_url "https://arxiv.org/pdf/2005.14165.pdf" --OPEN_API_KEY ""
 ```
 
 3. Enter a question and generate an answer from the extracted text
 ```
-python src/pdf_qa.py
+# Example
+python src/pdf_qa.py --query "On which datasets does GPT-3 struggle?"
 ```
