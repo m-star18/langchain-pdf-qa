@@ -9,14 +9,14 @@ from langchain import PromptTemplate
 
 
 def main(args):
-    # 4. 質問文をベクトル化してください。その後、 FAISS データベースから、関連の深い文章5件を抽出してください。
+    # Vectorize the question sentences. Then, 5 closely related sentences were extracted from the FAISS database
     os.environ["OPENAI_API_KEY"] = args.OPEN_API_KEY
     embeddings = OpenAIEmbeddings()
     db = FAISS.load_local(args.faiss_save_path, embeddings)
-    # queryをベクトル化
+    
     query = args.query
     embedding_vector = embeddings.embed_query(query)
-    # 検索
+    
     docs_and_scores = db.similarity_search_with_score_by_vector(embedding_vector, k=5)
     if len(docs_and_scores) != 5:
         raise AssertionError("The number of documents returned by the similarity search is not 5.")
@@ -26,13 +26,13 @@ def main(args):
         text += doc[0].page_content
     text += "」"
 
-    # 5. PromptTemplate クラスを用いて、上記5件の文章を参照して、質問への回答を返すようなプロンプトを作成してください。
+    # Using the PromptTemplate class, create a prompt that refers to the 5 sentences above and returns the answer to the question.
     template = query
     prompt = PromptTemplate(
         input_variables=[],
         template=text + "Please refer to the text above and answer the following question in English. " + template,
     )
-    # 6. 作ったプロンプトを text-davinci-003 へ投げ、回答を取得し、表示してください。
+    # Throw the created prompt to text-davinci-003, get the answer, and display it.
     llm = OpenAI(model_name="text-davinci-003")
     print(llm(prompt.format()))
 
