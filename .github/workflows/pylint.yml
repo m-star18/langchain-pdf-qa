@@ -1,9 +1,6 @@
 
 name: reviewdog
-on: 
-  pull_request:
-    branches:
-      - develop
+on: push
 jobs:
   reviewdog:
     name: reviewdog
