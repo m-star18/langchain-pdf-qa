@@ -9,18 +9,16 @@ from langchain.vectorstores.faiss import FAISS
 
 def main(args):
     os.environ["OPENAI_API_KEY"] = args.OPEN_API_KEY
-
-    # 1. PDFを読み込み、Document objectを作ってください。
+    
     loader = OnlinePDFLoader(args.pdf_url)
     pdf_docs = loader.load()
-
-    # 2. Document objectを読み込み適切なチャンクサイズに分割してください。
+    
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=args.chunk_size,
         chunk_overlap=args.chunk_overlap,
     )
 
-    # 3. OpenAIEmbeddings と FAISS オブジェクトを作成してください。上で作ったチャンクをベクトル化し、保存してください。
+    # Create OpenAIEmbeddings and FAISS objects. Vectorize the chunks created above and save.
     documents = text_splitter.split_documents(pdf_docs)
     embeddings = OpenAIEmbeddings()
     faiss_db = FAISS.from_documents(documents, embeddings)
