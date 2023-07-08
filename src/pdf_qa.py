@@ -13,10 +13,10 @@ def main(args):
     os.environ["OPENAI_API_KEY"] = args.OPEN_API_KEY
     embeddings = OpenAIEmbeddings()
     db = FAISS.load_local(args.faiss_save_path, embeddings)
-    
+
     query = args.query
     embedding_vector = embeddings.embed_query(query)
-    
+
     docs_and_scores = db.similarity_search_with_score_by_vector(embedding_vector, k=5)
     if len(docs_and_scores) != 5:
         raise AssertionError("The number of documents returned by the similarity search is not 5.")
