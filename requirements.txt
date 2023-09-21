@@ -11,7 +11,7 @@ chardet==5.1.0
 charset-normalizer==3.2.0
 click==8.1.4
 commonmark==0.9.1
-cryptography==41.0.3
+cryptography==41.0.4
 dataclasses-json==0.5.9
 Deprecated==1.2.14
 et-xmlfile==1.1.0
